@@ -289,6 +289,18 @@
   @media(max-width:1024px){.scroll-down{display:none}}
 </style>
 </head>
+  <script>
+  document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(this)).toString()
+    }).then(() => {
+      this.querySelector('button').innerHTML = 'Merci – on vous revient sous 48 h <span class="arrow"></span>';
+    });
+  });
+</script>
 <body>
 
 <!-- ============ Utility bar ============ -->
@@ -692,7 +704,8 @@
         <div class="form-card">
           <h3>Demande de soumission</h3>
           <p class="lead">Décrivez brièvement votre projet. On revient vers vous sous 48 h ouvrables.</p>
-          <form onsubmit="event.preventDefault();this.querySelector('button').innerHTML='Merci — on vous revient sous 48 h <span class=&quot;arrow&quot;></span>';">
+          <form name="contact" method="POST" data-netlify="true" id="contact-form">
+            <input type="hidden" name="form-name" value="contact">
             <div class="row-2">
               <div class="field">
                 <label for="f-nom">Nom complet</label>
